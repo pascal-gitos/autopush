@@ -8,51 +8,51 @@ import (
 )
 
 func main() {
-    // Проверка наличия незакоммиченных изменений
+    // Checking for uncommitted changes
     if hasUncommittedChanges() {
-        // Если есть незакоммиченные изменения, коммитим и пушим их
+        // If there are uncommitted changes, commit and push them
         commitAndPushChanges()
     } else {
-        fmt.Println("Нет незакоммиченных изменений")
+        fmt.Println("No uncommitted changes")
     }
 }
 
-// Проверка наличия незакоммиченных изменений
+// Checking for uncommitted changes
 func hasUncommittedChanges() bool {
     cmd := exec.Command("git", "status", "--porcelain")
     var out bytes.Buffer
     cmd.Stdout = &out
     err := cmd.Run()
     if err != nil {
-        log.Fatalf("Ошибка выполнения команды: %v", err)
+        log.Fatalf("Command execution error: %v", err)
     }
-    // Если вывод не пуст, значит есть незакоммиченные изменения
+    // If the output is not empty, then there are uncommitted changes
     return out.Len() > 0
 }
 
-// Коммитим и пушим изменения
+// Commit and push changes
 func commitAndPushChanges() {
-    // Команда для добавления всех изменений
+    // Command to add all changes
     cmdAdd := exec.Command("git", "add", ".")
     err := cmdAdd.Run()
     if err != nil {
-        log.Fatalf("Ошибка добавления изменений: %v", err)
+        log.Fatalf("Error adding changes: %v", err)
     }
 
-    // Команда для коммита изменений
-    commitMessage := "Автоматический коммит незакоммиченных изменений"
+    // Command to commit changes
+    commitMessage := "Automatic commit of uncommitted changes"
     cmdCommit := exec.Command("git", "commit", "-m", commitMessage)
     err = cmdCommit.Run()
     if err != nil {
-        log.Fatalf("Ошибка коммита изменений: %v", err)
+        log.Fatalf("Error committing changes: %v", err)
     }
 
-    // Команда для пуша изменений
+    // Command for pushing changes
     cmdPush := exec.Command("git", "push")
     err = cmdPush.Run()
     if err != nil {
-        log.Fatalf("Ошибка пуша изменений: %v", err)
+        log.Fatalf("Error pushing changes: %v", err)
     }
 
-    fmt.Println("Изменения успешно закоммичены и запушены")
+    fmt.Println("Changes successfully committed and pushed")
 }
