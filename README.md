@@ -1,1 +1,1 @@
-# Project on for for auto-push to git
+# Project on GO for auto-push to git
